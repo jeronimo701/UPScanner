@@ -1,0 +1,122 @@
+{
+  "snapshot": "2026-10-22",
+  "python": "3.13.12",
+  "packager": "PyInstaller 6.19.0",
+  "components": [
+    {
+      "distribution": "pypdf",
+      "version": "6.10.2",
+      "homepage": null,
+      "project_urls": [
+        "Bug Reports, https://github.com/py-pdf/pypdf/issues",
+        "Changelog, https://pypdf.readthedocs.io/en/latest/meta/CHANGELOG.html",
+        "Documentation, https://pypdf.readthedocs.io/en/latest/",
+        "Source, https://github.com/py-pdf/pypdf"
+      ]
+    },
+    {
+      "distribution": "openpyxl",
+      "version": "3.1.5",
+      "homepage": "https://openpyxl.readthedocs.io",
+      "project_urls": [
+        "Documentation, https://openpyxl.readthedocs.io/en/stable/",
+        "Source, https://foss.heptapod.net/openpyxl/openpyxl",
+        "Tracker, https://foss.heptapod.net/openpyxl/openpyxl/-/issues"
+      ]
+    },
+    {
+      "distribution": "xlrd",
+      "version": "2.0.2",
+      "homepage": "http://www.python-excel.org/",
+      "project_urls": []
+    },
+    {
+      "distribution": "pystray",
+      "version": "0.19.5",
+      "homepage": "https://github.com/moses-palmer/pystray",
+      "project_urls": []
+    },
+    {
+      "distribution": "pillow",
+      "version": "11.0.0",
+      "homepage": null,
+      "project_urls": [
+        "Changelog, https://github.com/python-pillow/Pillow/blob/main/CHANGES.rst",
+        "Documentation, https://pillow.readthedocs.io",
+        "Funding, https://tidelift.com/subscription/pkg/pypi-pillow?utm_source=pypi-pillow&utm_medium=pypi",
+        "Homepage, https://python-pillow.org",
+        "Mastodon, https://fosstodon.org/@pillow",
+        "Release notes, https://pillow.readthedocs.io/en/stable/releasenotes/index.html",
+        "Source, https://github.com/python-pillow/Pillow"
+      ]
+    },
+    {
+      "distribution": "pyserial",
+      "version": "3.5",
+      "homepage": "https://github.com/pyserial/pyserial",
+      "project_urls": []
+    },
+    {
+      "distribution": "numpy",
+      "version": "2.5.1",
+      "homepage": null,
+      "project_urls": [
+        "homepage, https://numpy.org",
+        "documentation, https://numpy.org/doc/",
+        "source, https://github.com/numpy/numpy",
+        "download, https://pypi.org/project/numpy/#files",
+        "tracker, https://github.com/numpy/numpy/issues",
+        "release notes, https://numpy.org/doc/stable/release"
+      ]
+    },
+    {
+      "distribution": "cryptography",
+      "version": "46.0.7",
+      "homepage": null,
+      "project_urls": [
+        "homepage, https://github.com/pyca/cryptography",
+        "documentation, https://cryptography.io/",
+        "source, https://github.com/pyca/cryptography/",
+        "issues, https://github.com/pyca/cryptography/issues",
+        "changelog, https://cryptography.io/en/latest/changelog/"
+      ]
+    },
+    {
+      "distribution": "cffi",
+      "version": "2.0.0",
+      "homepage": null,
+      "project_urls": [
+        "Documentation, https://cffi.readthedocs.io/",
+        "Changelog, https://cffi.readthedocs.io/en/latest/whatsnew.html",
+        "Downloads, https://github.com/python-cffi/cffi/releases",
+        "Contact, https://groups.google.com/forum/#!forum/python-cffi",
+        "Source Code, https://github.com/python-cffi/cffi",
+        "Issue Tracker, https://github.com/python-cffi/cffi/issues"
+      ]
+    },
+    {
+      "distribution": "pycparser",
+      "version": "3.0",
+      "homepage": null,
+      "project_urls": [
+        "Homepage, https://github.com/eliben/pycparser"
+      ]
+    },
+    {
+      "distribution": "six",
+      "version": "1.17.0",
+      "homepage": "https://github.com/benjaminp/six",
+      "project_urls": []
+    },
+    {
+      "distribution": "et_xmlfile",
+      "version": "2.0.0",
+      "homepage": "https://foss.heptapod.net/openpyxl/et_xmlfile",
+      "project_urls": [
+        "Documentation, https://openpyxl.pages.heptapod.net/et_xmlfile/",
+        "Source, https://foss.heptapod.net/openpyxl/et_xmlfile",
+        "Tracker, https://foss.heptapod.net/openpyxl/et_xmfile/-/issues"
+      ]
+    }
+  ]
+}

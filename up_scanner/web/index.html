@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UP Scanner</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header>
+    <div class="app-brand">
+      <button id="toggleSidebar" class="icon-btn" title="Свернуть документы и проекты" aria-label="Свернуть документы и проекты" aria-expanded="true">◀</button>
+      <h1>UP Scanner</h1>
+    </div>
+    <div class="header-right">
+      <div class="subtle">Папки: Acts/new и Acts/old</div>
+      <div id="clock" class="clock">--:--:--</div>
+      <button id="settingsBtn" aria-expanded="false">▸ Настройки</button>
+      <button id="helpBtn">Help</button>
+    </div>
+  </header>
+  <main id="appMain">
+    <aside>
+      <div class="toolbar" style="grid-template-columns: 1fr auto; margin-bottom: 10px;">
+        <button id="selectAll">Выбрать все</button>
+        <button id="refresh">Обновить</button>
+      </div>
+      <div class="segmented" style="width: 100%; margin-bottom: 10px;">
+        <button id="showNew" class="active">new</button>
+        <button id="showOld">old</button>
+      </div>
+      <div class="project-bulk">
+        <input id="bulkProject" placeholder="Мини-проект / название">
+        <button id="applyProject">Применить</button>
+      </div>
+      <div class="project-actions">
+        <button id="renameProject">Переименовать</button>
+        <button id="unlinkProject">Отвязать</button>
+        <button id="deleteDocs" class="danger">Удалить выбранные</button>
+      </div>
+      <div class="upload-row">
+        <input id="uploadInput" type="file" multiple accept=".pdf,.xls,.xlsx,.xlsm" hidden>
+        <button id="uploadBtn">Загрузить документы</button>
+      </div>
+      <div class="projects-panel">
+        <div class="projects-title">Проекты</div>
+        <div id="projectListNew" class="projects-list"></div>
+        <div id="projectListOld" class="projects-list"></div>
+      </div>
+      <div id="docs"></div>
+    </aside>
+    <section class="content">
+      <div class="toolbar toolbar-actions">
+        <input id="scan" class="scan-input" placeholder="Сканируй код сюда" autofocus>
+        <button id="toggleKeypad">Клавиатура</button>
+        <button id="moveDone" class="primary" disabled title="Переместить только выбранный 1 документ в old (без завершения всего проекта)">В old</button>
+        <button id="finishProject" class="primary" disabled title="Завершить мини-проект: перенести все выбранные документы в old/папку проекта">Завершить проект</button>
+      </div>
+      <div id="scanChoices" class="scan-choices hidden"></div>
+      <details class="settings" id="settingsMenu">
+        <summary>Настройки</summary>
+        <div class="settings-actions">
+          <button id="downloadHtml">Скачать HTML</button>
+          <button id="printPage">Печать</button>
+          <button id="openFolder">Открыть папку проекта</button>
+          <button id="scannerSettingsBtn">Сканер</button>
+          <button id="reset" class="danger">Сброс сканов</button>
+          <button id="themeToggle" class="icon-btn" title="Переключить тему">🌙</button>
+          <button id="exitApp" class="danger">Выход</button>
+        </div>
+        <div class="scanner-panel">
+          <div class="segmented">
+            <button id="modeHid" class="active">HID</button>
+            <button id="modeVcom">VCOM</button>
+          </div>
+          <select id="portSelect" disabled><option value="">COM-порт</option></select>
+          <input id="baudrate" value="9600" disabled>
+          <button id="serialStart" disabled>Старт</button>
+          <button id="serialStop" disabled>Стоп</button>
+          <div id="serialStatus" class="serial-status">VCOM остановлен</div>
+          <div id="serialCapture" class="serial-status">COM: освобожден</div>
+          <div id="serialLastPacket" class="serial-status">Последний пакет: —</div>
+        </div>
+        <div class="parser-setting">
+          <label for="parserProfile">Профиль разбора</label>
+          <select id="parserProfile"></select>
+          <div id="parserProfileHint" class="subtle"></div>
+        </div>
+        <div class="prefix-setting">
+          <label for="keypadPrefixInput">Префикс кнопки</label>
+          <input id="keypadPrefixInput" value="УП-" placeholder="Например: УП-">
+        </div>
+      </details>
+      <div class="stats">
+        <div class="stat"><span>Документов</span><b id="statDocs">0</b></div>
+        <div class="stat"><span>Позиций</span><b id="statLines">0</b></div>
+        <div class="stat"><span>Нужно штук</span><b id="statNeed">0</b></div>
+        <div class="stat"><span>Отсканировано</span><b id="statScanned">0</b></div>
+      </div>
+      <div id="contentScroll" class="content-scroll">
+        <div id="tableWrap" class="empty">Положи PDF/XLS/XLSX в Acts/new или загрузи кнопкой "Загрузить документы", затем выбери документы.</div>
+        <div id="notFoundLog" class="log not-found-log">Не найдено: пока пусто</div>
+        <div id="log" class="log"></div>
+      </div>
+    </section>
+    <aside id="keypadPanel" class="keypad-panel" aria-label="Виртуальная клавиатура">
+      <input id="keypadDisplay" class="keypad-display" readonly placeholder="Код для сканирования">
+      <div class="keypad-grid">
+        <button class="keypad-btn" data-key="1">1</button>
+        <button class="keypad-btn" data-key="2">2</button>
+        <button class="keypad-btn" data-key="3">3</button>
+        <button class="keypad-btn" data-key="4">4</button>
+        <button class="keypad-btn" data-key="5">5</button>
+        <button class="keypad-btn" data-key="6">6</button>
+        <button class="keypad-btn" data-key="7">7</button>
+        <button class="keypad-btn" data-key="8">8</button>
+        <button class="keypad-btn" data-key="9">9</button>
+        <button id="keypadPrefixBtn" class="keypad-btn action" data-key="УП-">УП-</button>
+        <button class="keypad-btn" data-key="0">0</button>
+        <button class="keypad-btn" data-key="-">-</button>
+        <button class="keypad-btn action" data-action="back">⌫</button>
+        <button class="keypad-btn action" data-action="clear">C</button>
+        <button class="keypad-btn action" data-action="enter">Enter</button>
+        <button class="keypad-btn action" data-action="qty-minus">−1</button>
+        <button class="keypad-btn action keypad-defect" data-action="defect">Брак</button>
+        <button class="keypad-btn action" data-action="qty-plus">+1</button>
+      </div>
+      <div class="keypad-hint">F8 — отметить последнюю позицию как брак</div>
+      <div id="keypadLog" class="keypad-log" aria-live="polite"></div>
+    </aside>
+  </main>
+  <button id="scrollTopBtn" class="scroll-top-btn hidden" title="Наверх">↑</button>
+  <button id="scrollBottomBtn" class="scroll-bottom-btn hidden" title="Вниз">↓</button>
+  <div id="notFoundSplash" class="not-found-splash hidden">Код отсутствует</div>
+  <div id="notFoundChoiceOverlay" class="dialog-overlay hidden">
+    <div class="dialog">
+      <h2>Код не найден</h2>
+      <p id="notFoundChoiceText"></p>
+      <div class="dialog-actions">
+        <button id="notFoundChoiceOk">OK</button>
+        <button id="notFoundChoiceMissing" class="danger">Отсутствует в накладной</button>
+      </div>
+    </div>
+  </div>
+  <div id="confirmOverlay" class="dialog-overlay hidden">
+    <div class="dialog">
+      <h2 id="confirmTitle">Подтверждение</h2>
+      <p id="confirmText"></p>
+      <input id="promptInput" class="dialog-input hidden">
+      <div class="dialog-actions">
+        <button id="confirmCancel">Отмена</button>
+        <button id="confirmOk" class="primary">OK</button>
+      </div>
+    </div>
+  </div>
+  <div id="scannerSettingsOverlay" class="dialog-overlay hidden">
+    <div class="dialog scanner-dialog">
+      <h2>Настройка сканера</h2>
+      <div class="scanner-test">
+        <label for="scannerTestInput">Тестовый ввод</label>
+        <input id="scannerTestInput" class="dialog-input" placeholder="Сканируй сюда и нажми Enter">
+      </div>
+      <div id="scannerResult" class="scanner-result">Сканируй код, чтобы увидеть raw, cleaned, EAN13 и длину.</div>
+      <div class="scanner-options">
+        <label for="trimStartInput">Не учитывать символов спереди</label>
+        <input id="trimStartInput" type="number" min="0" step="1" value="0">
+        <label for="trimEndInput">Не учитывать символов сзади</label>
+        <input id="trimEndInput" type="number" min="0" step="1" value="0">
+      </div>
+      <label class="scanner-checkbox">
+        <input id="trimManualInput" type="checkbox">
+        <span>Применять обрезку к ручному вводу</span>
+      </label>
+      <div class="dialog-actions">
+        <button id="scannerSettingsClose" class="primary">Закрыть</button>
+      </div>
+    </div>
+  </div>
+  <div id="helpOverlay" class="help-overlay hidden">
+    <div class="help-modal">
+      <div class="help-head">
+        <h2>Справка</h2>
+        <button id="helpClose" class="danger">Закрыть</button>
+      </div>
+      <div class="help-grid">
+        <div class="help-row"><button disabled>Обновить</button><span>Пересканировать папки и обновить список документов/проектов.</span></div>
+        <div class="help-row"><button disabled>new / old</button><span>Переключение между новыми и завершенными документами.</span></div>
+        <div class="help-row"><button disabled>Применить</button><span>Назначить мини-проект выбранным документам.</span></div>
+        <div class="help-row"><button disabled>Сканируй код сюда</button><span>Ручной ввод кода. Можно вводить цифры с клавиатуры и нажимать Enter.</span></div>
+        <div class="help-row"><button disabled>Клавиатура</button><span>Открыть цифровую клавиатуру для ввода кодов мышью/пальцем.</span></div>
+        <div class="help-row"><button disabled>Сброс сканов</button><span>Сбросить текущий прогресс сканирования.</span></div>
+        <div class="help-row"><button disabled>В old</button><span>Перенести один выбранный документ в old.</span></div>
+        <div class="help-row"><button disabled>Завершить проект</button><span>Завершить проект и перенести все выбранные документы в old/папку проекта.</span></div>
+        <div class="help-row"><button disabled>Скачать HTML</button><span>Скачать печатную HTML-версию текущей таблицы.</span></div>
+        <div class="help-row"><button disabled>Печать</button><span>Открыть чистую печатную страницу в браузере.</span></div>
+        <div class="help-row"><button disabled>Открыть папку проекта</button><span>Открыть папку текущего проекта/документов.</span></div>
+        <div class="help-row"><button disabled>Профиль разбора</button><span>Выбор правил парсинга PDF/XLSX. После смены профиля выполняется переиндексация.</span></div>
+        <div class="help-row"><button disabled>🌙 / ☀</button><span>Переключение светлой/темной темы.</span></div>
+        <div class="help-row"><button disabled>Выход</button><span>Остановить программу, освободить COM-порт и закрыть сервер.</span></div>
+        <div class="help-row"><button disabled>HID</button><span>Сканер как клавиатура: поток клавиш и Enter.</span></div>
+        <div class="help-row"><button disabled>VCOM</button><span>Сканер через COM-порт: выбери порт и нажми Старт.</span></div>
+        <div class="help-row"><button disabled>Документация</button><span>Подробные инструкции: <b>PARSER_PROFILE_GUIDE.md</b> и <b>README_FOR_USER_Jeronimo701.md</b> (файлы лежат рядом с UPScanner.exe).</span></div>
+      </div>
+    </div>
+  </div>
+<script src="/static/app.js"></script>
+</body>
+</html>
