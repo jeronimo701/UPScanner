@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, interactive-widget=resizes-content">
+<meta name="color-scheme" content="light dark">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'none'; object-src 'none'; form-action 'none'">
+<title>UPScanner</title>
+<link rel="stylesheet" href="style.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<header class="top">
+  <div class="identity"><img src="mark.svg" alt="" width="32" height="32"><h1>UPScanner</h1></div>
+  <div class="top-actions">
+    <button id="pick" class="outline">＋ Накладные</button>
+    <button id="settings" class="outline icon" aria-label="Настройки" title="Настройки"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 17h16M9 4v6m6 4v6"/></svg></button>
+  </div>
+</header>
+<main>
+  <section class="controls" aria-label="Сканирование">
+    <div class="project">
+      <button id="projects" class="outline">Проекты</button>
+      <select id="project" aria-label="Текущий проект"></select>
+      <button id="newProject" class="outline" title="Новый проект" aria-label="Новый проект">＋</button>
+    </div>
+    <form id="scanForm" class="scan">
+      <input id="code" aria-label="Код или название" placeholder="Код или название" autocomplete="off" enterkeyhint="go">
+      <button type="submit" class="solid">Ввод</button>
+      <button id="camera" type="button" class="outline" aria-label="Сканировать камерой" title="Камера"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 6h4l2-2h4l2 2h4a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z"/><circle cx="12" cy="13" r="4"/></svg></button>
+    </form>
+    <p id="feedback" role="status" hidden></p>
+    <dl class="stats"><div><dt>Позиций</dt><dd id="total">0</dd></div><div><dt>Готово</dt><dd id="complete">0</dd></div><div><dt>Расхождения</dt><dd id="issues">0</dd></div></dl>
+    <div class="filters">
+      <div class="segments" aria-label="Фильтр позиций"><button data-filter="all" aria-pressed="true">Все</button><button data-filter="open" aria-pressed="false">Осталось</button><button data-filter="issues" aria-pressed="false">Расхождения</button></div>
+      <button id="export" class="outline" title="Выгрузить CSV" aria-label="Выгрузить CSV"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3v12m-5-5 5 5 5-5M4 16v4h16v-4"/></svg></button>
+    </div>
+    <details id="files"><summary>Документы <span id="docCount"></span></summary><ul id="docList"></ul></details>
+  </section>
+  <section id="rows" aria-label="Позиции"></section>
+</main>
+<dialog id="modal" aria-labelledby="modalTitle">
+  <form method="dialog"><h2 id="modalTitle"></h2><div id="modalBody"></div><div id="modalActions"></div></form>
+</dialog>
+</body>
+</html>

@@ -16,3 +16,10 @@ outputs/
 .env.*
 Acts/
 data/
+
+.gradle/
+local.properties
+*.apk
+*.aab
+*.keystore
+*.jks

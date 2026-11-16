@@ -1,0 +1,125 @@
+* { box-sizing: border-box; }
+:root {
+  color-scheme: light;
+  font-family: system-ui, sans-serif;
+  color: var(--text);
+  background: var(--background);
+  --text: #202b27;
+  --background: #eef2ee;
+  --surface: #fff;
+  --header: #14211d;
+  --header-line: #778980;
+  --line: #cdd8d1;
+  --muted: #52625a;
+  --green: #215b43;
+  --primary: #215b43;
+  --primary-text: #fff;
+  --red: #8b2430;
+  --danger: #8b2430;
+  --segments: #e1e9e3;
+  --done: #e6f1e8;
+  --issue: #fff3ea;
+}
+:root[data-theme=dark], :root[data-theme=amoled] {
+  color-scheme: dark;
+  --text: #ebefec;
+  --background: #101614;
+  --surface: #1b2420;
+  --header: #101614;
+  --header-line: #60736a;
+  --line: #41534a;
+  --muted: #aebfb6;
+  --green: #95dfb5;
+  --primary: #95dfb5;
+  --primary-text: #102219;
+  --red: #ffadad;
+  --danger: #9a303b;
+  --segments: #25332c;
+  --done: #193329;
+  --issue: #342527;
+}
+:root[data-theme=amoled] {
+  --background: #000;
+  --surface: #000;
+  --header: #000;
+  --segments: #0c0c0c;
+  --done: #000;
+  --issue: #000;
+}
+body { margin: 0; }
+button, input, select { font: inherit; color: inherit; }
+button, select, input { min-height: 44px; border-radius: 6px; border: 1px solid var(--line); background: var(--surface); }
+button { padding: 0 10px; cursor: pointer; }
+button:disabled { opacity: .54; cursor: default; }
+:focus-visible { outline: 2px solid var(--green); outline-offset: 1px; }
+[hidden] { display: none !important; }
+.top, .top-actions, .identity, .project, .scan, .filters, .segments { display: flex; align-items: center; gap: 8px; }
+.top { justify-content: space-between; padding: 10px max(12px, calc((100% - 856px) / 2)); background: var(--header); color: #f6fbf7; }
+.top button { background: transparent; border-color: var(--header-line); color: white; }
+.top-actions { flex: 0 0 auto; }
+.icon { width: 44px; padding: 0; display: grid; place-items: center; }
+@media (max-width: 365px) { .identity img { display: none; } }
+h1 { font-size: 21px; margin: 0; }
+main { max-width: 880px; margin: 0 auto; padding: 12px; }
+.controls { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; }
+.project select { width: 0; }
+.project select, .scan input { flex: 1 1 0; min-width: 0; padding: 0 9px; }
+.solid { background: var(--primary); border-color: var(--primary); color: var(--primary-text); }
+.outline { background: transparent; }
+svg { width: 23px; height: 23px; display: block; }
+#camera, #export, #newProject { flex: 0 0 44px; padding: 0; display: grid; place-items: center; }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 0; border-block: 1px solid var(--line); padding: 8px 0; }
+.stats div { padding: 0 8px; }
+.stats div + div { border-left: 1px solid var(--line); }
+dt { font-size: 12px; color: var(--muted); overflow-wrap: anywhere; }
+dd { margin: 2px 0 0; font-size: 23px; font-weight: 650; }
+.segments { gap: 0; flex: 1; min-width: 0; background: var(--segments); border-radius: 6px; padding: 2px; }
+.segments button { flex: 1; min-width: 0; border-color: transparent; background: transparent; font-size: 12px; padding: 0 4px; overflow-wrap: anywhere; }
+.segments button:last-child { flex-grow: 1.38; }
+.segments button[aria-pressed=true] { background: var(--surface); border-color: var(--line); color: var(--green); font-weight: 650; }
+#feedback { margin: 0; color: var(--green); font-size: 14px; overflow-wrap: anywhere; }
+#feedback.error, .form-error { color: var(--red); }
+details { font-size: 13px; color: var(--muted); }
+summary { cursor: pointer; padding: 6px 0; }
+#docList { padding-left: 20px; overflow-wrap: anywhere; margin: 5px 0; }
+#rows { margin-top: 10px; border-top: 1px solid var(--line); }
+.row { padding: 11px 10px; border-bottom: 1px solid var(--line); border-left: 3px solid transparent; background: var(--surface); overflow-wrap: anywhere; }
+.row.done { background: var(--done); }
+.row.issue { background: var(--issue); }
+.row.last { border-left-color: var(--green); }
+.row-head, .row-actions { display: flex; justify-content: space-between; gap: 6px; align-items: center; }
+.row-head { flex-wrap: wrap; }
+.row h3 { font-size: 15px; margin: 5px 0; font-weight: 650; }
+.row code { font-size: 13px; font-weight: 650; }
+.row small { display: block; color: var(--muted); margin: 4px 0; }
+.status { font-size: 12px; color: var(--muted); font-weight: 650; }
+.done .status { color: var(--green); }
+.issue .status, .defect { color: var(--red); }
+.row-actions { margin-top: 7px; flex-wrap: wrap; }
+.stepper { display: flex; align-items: center; gap: 5px; }
+.stepper button { width: 44px; font-size: 20px; }
+.amount { min-width: 52px; font-variant-numeric: tabular-nums; text-align: center; }
+.defect[aria-pressed=true], .danger { background: var(--danger); color: white; }
+.empty { padding: 16px 1px; color: var(--muted); font-size: 14px; }
+dialog { border: 1px solid var(--line); border-radius: 8px; padding: 16px; width: min(440px, calc(100% - 24px)); max-height: 82dvh; color: var(--text); background: var(--surface); overflow-wrap: anywhere; }
+dialog::backdrop { background: #0009; }
+dialog h2 { font-size: 19px; margin: 0 0 10px; }
+dialog input:not([type=radio]) { width: 100%; padding: 0 9px; }
+#modalActions { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.choice { display: block; text-align: left; width: 100%; margin-top: 5px; padding: 7px; }
+.project-group { padding: 8px 0; border-bottom: 1px solid var(--line); }
+.project-group h3 { font-size: 13px; color: var(--muted); margin: 0 0 6px; }
+.project-entry { display: grid; width: 100%; gap: 2px; padding: 7px; margin: 4px 0; text-align: left; }
+.project-entry[aria-current=true] { border-color: var(--green); }
+.project-entry small { color: var(--muted); }
+.project-tools { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.project-tools p { flex-basis: 100%; margin: 0; font-size: 13px; color: var(--muted); }
+.theme-options { min-width: 0; margin: 0 0 8px; border: 1px solid var(--line); border-radius: 6px; }
+.theme-option { display: flex; align-items: center; gap: 8px; min-height: 44px; cursor: pointer; }
+.theme-option input { min-height: 0; width: 18px; height: 18px; padding: 0; accent-color: var(--green); }
+.scanner-options, .instructions { margin: 8px 0; }
+.scanner-setting { display: flex; align-items: center; justify-content: space-between; gap: 6px; margin: 4px 0; }
+dialog .scanner-setting input { width: 75px; }
+dialog input[type=checkbox] { width: 18px; }
+.instructions ol { padding-left: 20px; }
+.instructions li + li { margin-top: 8px; }
